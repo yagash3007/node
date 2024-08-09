@@ -1,11 +1,19 @@
 const express = require("express");
+const teamApis = require("./api/tickets/teams");
+const userApis = require("./api/tickets/user");
 const app = express();
-const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// Middleware to parse JSON request bodies
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+// Route handlers
+app.use("/teams", teamApis);
+app.use("/user", userApis);
+// Start the server
+app.listen(3000, (error) => {
+  if (error) {
+    console.error("Server start failed:", error);
+  } else {
+    console.log("Server started on port 3000");
+  }
 });
